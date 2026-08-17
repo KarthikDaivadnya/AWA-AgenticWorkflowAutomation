@@ -1,0 +1,21 @@
+{
+  "TableName": "agentic-workflow-table",
+  "BillingMode": "PAY_PER_REQUEST",
+  "AttributeDefinitions": [
+    { "AttributeName": "PK", "AttributeType": "S" },
+    { "AttributeName": "SK", "AttributeType": "S" }
+  ],
+  "KeySchema": [
+    { "AttributeName": "PK", "KeyType": "HASH" },
+    { "AttributeName": "SK", "KeyType": "RANGE" }
+  ],
+  "_comment": [
+    "Single-table design. Item shapes:",
+    "USER#<userId>            | PROFILE           -> user record",
+    "USER#<userId>            | WORKFLOW#<wfId>   -> workflow record",
+    "WORKFLOW#<wfId>          | RUN#<runId>       -> run record",
+    "This mirrors the SQLite tables (users/workflows/runs) 1:1 so swapping",
+    "storageService.js from SQLite to the DynamoDB DocumentClient is a",
+    "drop-in change without touching route logic."
+  ]
+}
