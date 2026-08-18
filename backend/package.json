@@ -4,13 +4,15 @@
   "description": "Backend for the Agentic Workflow Automation Tool",
   "type": "module",
   "main": "src/server.js",
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
     "seed": "node src/db/seed.js"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.32.1",
     "@aws-sdk/client-dynamodb": "^3.687.0",
     "@aws-sdk/client-s3": "^3.687.0",
     "@aws-sdk/lib-dynamodb": "^3.687.0",
@@ -19,6 +21,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "groq-sdk": "^0.9.1",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
     "nanoid": "^5.0.8",
