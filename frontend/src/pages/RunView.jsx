@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import { api, BASE_URL, getToken } from "../api/client";
 import Layout from "../components/Layout";
+import RunDetailCard from "../components/RunDetailCard";
 
 export default function RunView() {
   const { id } = useParams();
@@ -15,6 +16,7 @@ export default function RunView() {
   const [stepResults, setStepResults] = useState([]);
   const [runError, setRunError] = useState("");
   const [history, setHistory] = useState([]);
+  const [expandedRunId, setExpandedRunId] = useState(null);
   const socketRef = useRef(null);
 
   useEffect(() => {
@@ -141,19 +143,35 @@ export default function RunView() {
       )}
 
       <h2 style={{ fontSize: 16, marginBottom: 12 }}>Run history</h2>
+      <p style={{ color: "var(--text-faint)", fontSize: 12, marginTop: -8, marginBottom: 12 }}>Click a run to see the input and every step's answer.</p>
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         {history.length === 0 && <p style={{ color: "var(--text-faint)", fontSize: 13 }}>No runs yet.</p>}
-        {history.map((run) => (
-          <div key={run.id} className="card" style={{ padding: 14, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div>
-              <div className="mono" style={{ fontSize: 12, color: "var(--text-muted)" }}>{new Date(run.startedAt).toLocaleString()}</div>
-              <div style={{ fontSize: 13, color: "var(--text-faint)", maxWidth: 480, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                {run.inputText}
-              </div>
+        {history.map((run) => {
+          const isExpanded = expandedRunId === run.id;
+          return (
+            <div key={run.id} className="card" style={{ padding: 0, overflow: "hidden" }}>
+              <button
+                onClick={() => setExpandedRunId(isExpanded ? null : run.id)}
+                style={{
+                  width: "100%", padding: 14, background: "none", border: "none", cursor: "pointer",
+                  display: "flex", justifyContent: "space-between", alignItems: "center", textAlign: "left", color: "inherit",
+                }}
+              >
+                <div style={{ minWidth: 0, flex: 1, marginRight: 12 }}>
+                  <div className="mono" style={{ fontSize: 12, color: "var(--text-muted)" }}>{new Date(run.startedAt).toLocaleString()}</div>
+                  <div style={{ fontSize: 13, color: "var(--text-faint)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    {run.inputText}
+                  </div>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
+                  <StatusBadge status={run.status} />
+                  <span style={{ color: "var(--text-faint)", fontSize: 12 }}>{isExpanded ? "▲" : "▼"}</span>
+                </div>
+              </button>
+              {isExpanded && <RunDetailCard run={run} />}
             </div>
-            <StatusBadge status={run.status} />
-          </div>
-        ))}
+          );
+        })}
       </div>
     </Layout>
   );

@@ -16,7 +16,7 @@ export default function Layout({ children }) {
             width: 26, height: 26, borderRadius: 7, background: "var(--accent)",
             display: "grid", placeItems: "center", fontSize: 12, fontWeight: 700, color: "#fff"
           }}>⛓</div>
-          <span style={{ fontWeight: 700, fontSize: 14 }}>Agentic Workflows</span>
+          <span style={{ fontWeight: 700, fontSize: 14 }}>Agentic Workflow Automation</span>
         </div>
 
         <NavItem to="/" label="Workflows" />
