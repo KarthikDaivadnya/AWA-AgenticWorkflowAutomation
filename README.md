@@ -205,7 +205,7 @@ included.
 
 | Dashboard | Workflow Builder | Live Execution |
 |---|---|---|
-| Screenshot 2026-08-19 135312.png | _screenshot_ | _screenshot_ |
+| <img src="Screenshot 2026-08-19 135312.png"> | _screenshot_ | _screenshot_ |
 
 ## Notes
 
