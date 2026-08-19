@@ -145,10 +145,30 @@ cd frontend
 npm install
 npm run dev
 ```
-Runs on `http://localhost:5173`.
+Runs on `http://localhost:5173`, calling the backend at `:4000`.
 
 Register an account, create a workflow (e.g. Summarize → Classify),
 paste some text, and watch it execute step by step in real time.
+
+> In development the frontend and backend run as two separate servers.
+> In production they're served as one — see below.
+
+## Single-URL production build
+
+The backend serves the built frontend directly, so the whole app lives
+at one URL — no separate static hosting needed.
+
+```bash
+cd frontend
+echo "VITE_API_URL=" > .env.production
+npm run build
+rm -rf ../backend/public
+cp -r dist ../backend/public
+```
+
+Then deploy `backend` (now including `public/`) the normal way. The
+resulting Elastic Beanstalk URL serves the React app at `/` and the API
+at `/api/*` from the same origin — that's the single link to share.
 
 ## Project structure
 
@@ -158,7 +178,8 @@ backend/
 ├─ src/services/        agentService (LLM calls), storageService (local/S3)
 ├─ src/db/               store.js (unified SQLite/DynamoDB layer)
 ├─ src/middleware/       auth guard, async error handling
-└─ src/ws/               Socket.io live run updates
+├─ src/ws/               Socket.io live run updates
+└─ public/               built frontend (generated — see below, gitignored)
 frontend/
 ├─ src/pages/            Auth, Dashboard, WorkflowBuilder, RunView
 ├─ src/components/       Layout, RunDetailCard
@@ -176,7 +197,7 @@ See [`aws/README.md`](aws/README.md) for the full deployment guide —
 S3, DynamoDB, Elastic Beanstalk, IAM, and CI/CD, console-only steps
 included.
 
-**🔗 Live demo:** _add your Elastic Beanstalk / CloudFront URL here_
+**🔗 Live demo:** [agentic-workflow-automation-env.eba-meeezaxf.eu-north-1.elasticbeanstalk.com](http://agentic-workflow-automation-env.eba-meeezaxf.eu-north-1.elasticbeanstalk.com)
 
 ## Screenshots
 
