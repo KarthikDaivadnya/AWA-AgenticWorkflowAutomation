@@ -27,6 +27,21 @@ app.use("/api/auth", authRoutes);
 app.use("/api/workflows", workflowRoutes);
 app.use("/api/runs", runRoutes);
 
+// Serve the built React app so the whole product lives at one URL.
+// frontend/dist gets copied to backend/public before each deploy — see
+// the "Deploying frontend + backend together" section in the README.
+const publicDir = path.join(__dirname, "..", "public");
+app.use(express.static(publicDir));
+
+// SPA fallback: any non-API, non-file GET request returns index.html so
+// React Router can handle the route client-side (e.g. a hard refresh on
+// /workflows/abc123/run would 404 without this).
+app.get(/^(?!\/api).*/, (req, res, next) => {
+  res.sendFile(path.join(publicDir, "index.html"), (err) => {
+    if (err) next(); // public/index.html doesn't exist yet — fall through to 404
+  });
+});
+
 app.use((req, res) => res.status(404).json({ error: "Not found" }));
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {

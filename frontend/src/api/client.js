@@ -1,4 +1,8 @@
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+// "" (empty string) means "same origin as the page" — used when the
+// frontend is served by the backend itself. Falls back to localhost
+// only when the env var isn't set at all (local dev with separate
+// frontend/backend servers).
+const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:4000";
 
 function getToken() {
   return localStorage.getItem("awa_token");

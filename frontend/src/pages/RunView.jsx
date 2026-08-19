@@ -25,7 +25,10 @@ export default function RunView() {
   }, [id]);
 
   useEffect(() => {
-    const socket = io(BASE_URL, { auth: { token: getToken() } });
+    // Empty BASE_URL means same-origin mode — passing "" to io() would try
+    // to connect to a literal empty host, so pass undefined instead, which
+    // makes socket.io-client default to the page's own origin.
+    const socket = io(BASE_URL || undefined, { auth: { token: getToken() } });
     socketRef.current = socket;
     return () => socket.disconnect();
   }, []);
