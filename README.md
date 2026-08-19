@@ -32,7 +32,6 @@ the whole thing deploys to real AWS infrastructure, not just localhost.
 - [Quick start](#quick-start-local--no-aws-needed)
 - [Project structure](#project-structure)
 - [Deploying to AWS](#deploying-to-aws)
-- [Screenshots](#screenshots)
 
 ## Why this exists
 
@@ -199,13 +198,6 @@ included.
 
 **🔗 Live demo:** [agentic-workflow-automation-env.eba-meeezaxf.eu-north-1.elasticbeanstalk.com](http://agentic-workflow-automation-env.eba-meeezaxf.eu-north-1.elasticbeanstalk.com)
 
-## Screenshots
-
-<!-- Add screenshots or a demo GIF here — dashboard, workflow builder, and live execution view work best -->
-
-| Dashboard | Workflow Builder | Live Execution |
-|---|---|---|
-| <img src="Screenshot 2026-08-19 135312.png"> | _screenshot_ | _screenshot_ |
 
 ## Notes
 
